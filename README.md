@@ -11,3 +11,8 @@
 ## Ссылка
 * https://t.me/umanadov_bot
 * @umanadov_bot
+
+## Команды для работы с ботом
+* pip install -r requirements.txt - установка зависимостей
+* python src\main.py - запустить бота для Windows
+* python3 src\main.py - запустить бота для Linux

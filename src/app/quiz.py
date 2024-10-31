@@ -4,6 +4,7 @@ from app.questions import get_data
 
 quiz_data = get_data()
 
+
 async def get_question(message, user_id):
     # Получение текущего вопроса из словаря состояний пользователя
     current_question_index = await db.get_quiz_index(user_id)

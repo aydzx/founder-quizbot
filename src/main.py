@@ -10,7 +10,7 @@ from app.handlers import router
 logging.basicConfig(level=logging.INFO)
 
 # Замените "YOUR_BOT_TOKEN" на токен, который вы получили от BotFather
-API_TOKEN = "__"
+API_TOKEN = "6490996410:AAEc1HfwshFbpptICd5AV1BGR6Txo4OtDgE"
 
 # Объект бота
 bot = Bot(token=API_TOKEN)

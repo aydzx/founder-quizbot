@@ -6,7 +6,12 @@ async def update_current_index(callback):
     current_question_index = await db.get_quiz_index(callback.from_user.id)
     current_question_index += 1
     max_score = await db.get_max_score(callback.from_user.id)
-    await db.update_quiz_index(callback.from_user.id, callback.from_user.username, current_question_index, max_score)
+    await db.update_quiz_index(
+        callback.from_user.id,
+        callback.from_user.username,
+        current_question_index,
+        max_score,
+    )
 
 
 async def check_answer(callback, length_data):
@@ -31,17 +36,23 @@ async def edit_message(callback):
         reply_markup=None,
     )
 
+
+async def send_answer(callback, answer):
+    await callback.message.answer(f'Ваш ответ: answer')
+
+
 async def update_current_score(callback):
-    current_score = await db.get_max_score(callback.from_user.id) 
+    current_score = await db.get_max_score(callback.from_user.id)
     current_score += 1
     await db.update_max_score(callback.from_user.id, current_score)
+
 
 async def get_statistics():
     users = await db.get_users_max_score()
 
-    statistics = ''
+    statistics = ""
 
     for user_name, score in users:
-        statistics += f'{user_name} \t| {score} \n'
-    
+        statistics += f"{user_name} \t| {score} \n"
+
     return statistics

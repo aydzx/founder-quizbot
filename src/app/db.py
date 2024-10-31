@@ -19,7 +19,7 @@ async def get_quiz_index(user_id):
                 return 0
 
 
-async def update_quiz_index(user_id, user_name, index, max_score = 0):
+async def update_quiz_index(user_id, user_name, index, max_score=0):
     # Создаем соединение с базой данных (если она не существует, она будет создана)
     async with aiosqlite.connect(DB_NAME) as db:
         # Вставляем новую запись или заменяем ее, если с данным user_id уже существует
@@ -41,13 +41,11 @@ async def get_max_score(user_id):
                 return results[0]
             else:
                 return 0
-            
+
 
 async def get_users_max_score():
     async with aiosqlite.connect(DB_NAME) as db:
-        async with db.execute(
-            "SELECT user_name, max_score FROM quiz_state"
-        ) as cursor:
+        async with db.execute("SELECT user_name, max_score FROM quiz_state") as cursor:
             results = await cursor.fetchall()
             if results is not None:
                 return results
@@ -63,8 +61,6 @@ async def update_max_score(user_id, score):
         )
 
         await db.commit()
-    
-    
 
 
 async def create_table():

@@ -11,10 +11,12 @@ from app.utils import *
 router = Router()
 
 
-@router.callback_query(F.data == "right_answer")
+@router.callback_query(F.data.startswith("right_answer_"))
 async def right_answer(callback: CallbackQuery):
 
     await edit_message(callback)
+
+    await send_answer(callback, callback.data.split('_')[2])
 
     await callback.message.answer("Верно!")
 
@@ -25,11 +27,13 @@ async def right_answer(callback: CallbackQuery):
     await check_answer(callback, len(quiz_data))
 
 
-@router.callback_query(F.data == "wrong_answer")
+@router.callback_query(F.data.startswith("wrong_answer_"))
 async def wrong_answer(callback: CallbackQuery):
     await edit_message(callback)
 
     correct_option = await get_correct_option(callback)
+
+    await send_answer(callback, callback.data.split('_')[2])
 
     await callback.message.answer(f"Неправильно. Правильный ответ: {correct_option}")
 

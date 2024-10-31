@@ -10,7 +10,9 @@ def generate_options_keyboard(answer_options, right_answer):
             InlineKeyboardButton(
                 text=option,
                 callback_data=(
-                    "right_answer" if option == right_answer else "wrong_answer"
+                    f"right_answer_{option}"
+                    if option == right_answer
+                    else f"wrong_answer_{option}"
                 ),
             )
         )
@@ -23,5 +25,6 @@ def generate_start_keyboard():
     builder = ReplyKeyboardBuilder()
     builder.add(KeyboardButton(text="Начать игру"))
     builder.add(KeyboardButton(text="Посмотреть статистику"))
+    builder.adjust(1)
 
     return builder

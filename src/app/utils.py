@@ -16,10 +16,13 @@ async def update_current_index(callback):
 
 async def check_answer(callback, length_data):
     current_question_index = await db.get_quiz_index(callback.from_user.id)
+    max_score = await db.get_max_score(callback.from_user.id)
     if current_question_index < length_data:
         await get_question(callback.message, callback.from_user.id)
     else:
-        await callback.message.answer("Это был последний вопрос. Квиз завершен!")
+        await callback.message.answer(
+            f"Это был последний вопрос. Квиз завершен!\nВы ответили правильно на {max_score} вопросов."
+        )
 
 
 async def get_correct_option(callback):
@@ -37,8 +40,11 @@ async def edit_message(callback):
     )
 
 
-async def send_answer(callback, answer):
-    await callback.message.answer(f'Ваш ответ: answer')
+async def send_answer(callback):
+    current_question_index = await db.get_quiz_index(callback.from_user.id)
+    answer_index = int(callback.data.split("_")[-1])
+    answer = quiz_data[current_question_index]["options"][answer_index]
+    await callback.message.answer(f"Ваш ответ: {answer}")
 
 
 async def update_current_score(callback):

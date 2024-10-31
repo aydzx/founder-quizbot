@@ -45,7 +45,9 @@ async def get_max_score(user_id):
 
 async def get_users_max_score():
     async with aiosqlite.connect(DB_NAME) as db:
-        async with db.execute("SELECT user_name, max_score FROM quiz_state") as cursor:
+        async with db.execute(
+            "SELECT user_name, max_score FROM quiz_state ORDER BY max_score desc LIMIT 10"
+        ) as cursor:
             results = await cursor.fetchall()
             if results is not None:
                 return results
